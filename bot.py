@@ -22,7 +22,7 @@ async def load_extensions():
 async def reload(ctx):
     """Перезагружает все команды из папки 'commands'"""
     for filename in os.listdir('./commands'):
-        if filename.endswith('.py') and filename != 'loader.py':  # исключаем лоадер
+        if filename.endswith('.py') and filename != 'reload.py':  # исключаем лоадер
             try:
                 await bot.reload_extension(f'commands.{filename[:-3]}')  # Перезагружаем команду
                 await ctx.send(f'Команда {filename} перезагружена!')
