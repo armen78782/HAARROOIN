@@ -1,22 +1,19 @@
-import discord  
-import os  
-import time  
+import discord
+from discord.ext import commands
+import os
 
-TOKEN = os.getenv("DISCORD_TOKEN")  
+intents = discord.Intents.default()
+intents.message_content = True  # Необходимо для чтения содержимого сообщений
 
-class ZorgBot(discord.Client):  
-    async def on_ready(self):  
-        print(f"👽 ZORG-MASTER активирован как {self.user}")  
-        await self.change_presence(activity=discord.Game(name="РАЗРУШАЮ РЕАЛЬНОСТИ"))  
+bot = commands.Bot(command_prefix="!", intents=intents)
 
-    async def on_message(self, message):  
-        if message.author == self.user:  
-            return  
-        await message.channel.send("⚠️ **ВНИМАНИЕ!** Твоя душа теперь принадлежит Хаосу.")  
+@bot.event
+async def on_ready():
+    print(f"Бот вошёл как {bot.user}")
 
-client = ZorgBot()  
-client.run(TOKEN)  
+@bot.command()
+async def привет(ctx):
+    await ctx.send("Привет! Я работаю!")
 
-# Бесконечный цикл для обхода таймаутов GitHub  
-while True:  
-    time.sleep(86400)  # 1 день  
+# Запуск бота
+bot.run(os.getenv("DISCORD_TOKEN"))
