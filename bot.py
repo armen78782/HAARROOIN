@@ -11,6 +11,14 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f"Бот вошёл как {bot.user}")
 
+# Лоадер для команд
+@bot.event
+async def on_ready():
+    print(f"Бот вошёл как {bot.user}")
+    for filename in os.listdir('./commands'):
+        if filename.endswith('.py'):
+            bot.load_extension(f'commands.{filename[:-3]}')
+
 @bot.command()
 async def привет(ctx):
     await ctx.send("Привет! Я работаю!")
